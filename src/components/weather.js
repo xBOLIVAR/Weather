@@ -24,7 +24,10 @@ const Weather = () => {
 
     
    
-    const WeatherData = async () =>{
+   
+
+    useEffect(() => {
+        const WeatherData = async () =>{
             window.navigator.geolocation.getCurrentPosition(savePositionToState)
             const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=73e4aae7fa9d0e5b46253c138b05dede&units=${changeTemp}`)
             setCityName(res.data.name)
@@ -35,12 +38,12 @@ const Weather = () => {
             setClouds(res.data.clouds.all)
             setPressure(res.data.main.pressure)
             setIcon("http://openweathermap.org/img/w/" + res.data.weather[0].icon + ".png")
-            console.log(res.data)  
-    }    
+ 
+        }   
 
-    useEffect(() => {
         WeatherData();
     }, [latitude, longitude, changeTemp])
+
 
     
     return(
@@ -52,7 +55,7 @@ const Weather = () => {
                 </div>
                 <div className="body__container--all">
                     <div className = "img">
-                        <img  src = {icon} />
+                        <img  src = {icon} alt="Icon" />
                         <h2>{temperature}°C</h2>
                     </div>
                     <div className="information">
@@ -64,7 +67,7 @@ const Weather = () => {
                         
                     </div>
                 </div>
-                <button onClick = {() => {setChangeTemp("imperial");}} >DEGREES °F/°C</button>
+                <button onClick = {() => {setChangeTemp("imperial"); }} >DEGREES °F/°C</button>
             </div>
         </div>
     )
